@@ -1,0 +1,11 @@
+# created by virtualenv automatically
+bin/
+lib/
+
+# Python build artifacts
+*.egg-info/
+dist/
+build/
+__pycache__/
+*.pyc
+
