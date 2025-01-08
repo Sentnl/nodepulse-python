@@ -7,10 +7,9 @@ node_pulse = NodePulse(
     node_type='hyperion',
     node_count=3,
     history_full=True,
-    streaming_enabled=True,
-    log_level='info'
+    streaming_enabled=True
 )
 
 # Get a node
 node = node_pulse.get_node()
-print(f"Using QryHub node: {node}") 
+print(f"\nUsing QryHub node: {node}") 

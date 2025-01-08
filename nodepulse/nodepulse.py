@@ -8,6 +8,8 @@ from enum import Enum
 class NodeType(str, Enum):
     HYPERION = 'hyperion'
     ATOMIC = 'atomic'
+    LIGHTAPI = 'lightapi'
+    IPFS = 'ipfs'
 
 class Network(str, Enum):
     MAINNET = 'mainnet'
@@ -37,6 +39,28 @@ class NodePulse:
                 'https://test.wax.api.atomicassets.io',
                 'https://atomic-wax-testnet.eosphere.io',
                 'https://testatomic.waxsweden.org',
+            ],
+        },
+        'lightapi': {
+            'mainnet': [
+                'https://lightapi.eosamsterdam.net',
+                'https://lightapi.eosrio.io',
+                'https://api.light.xeos.me',
+            ],
+            'testnet': [
+                'https://testnet.lightapi.eosamsterdam.net',
+                'https://testnet.lightapi.eosrio.io',
+            ],
+        },
+        'ipfs': {
+            'mainnet': [
+                'https://ipfs.io',
+                'https://cloudflare-ipfs.com',
+                'https://gateway.pinata.cloud',
+            ],
+            'testnet': [
+                'https://test-ipfs.pinata.cloud',
+                'https://test.ipfs.io',
             ],
         },
     }
@@ -210,10 +234,13 @@ class NodePulse:
                 self.logger.warning(f"No nodes available, using first default node: {default_node}")
                 return default_node
 
+            # Extract URL if node is a dictionary, otherwise use node directly
             node = self.nodes[self.current_index]
+            node_url = node['url'] if isinstance(node, dict) else node
+            
             self.current_index = (self.current_index + 1) % len(self.nodes)
-            self.logger.debug(f"Returning node: {node} (index: {self.current_index})")
-            return node
+            self.logger.debug(f"Returning node: {node_url} (index: {self.current_index})")
+            return node_url
 
     def __del__(self):
         """Cleanup when the object is destroyed."""

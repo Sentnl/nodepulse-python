@@ -1,42 +1,38 @@
 from nodepulse import NodePulse
-import logging
+import requests
 import time
+import json
 
-# Setup logging
-logging.basicConfig(
-    level=logging.INFO,  # Changed to INFO to reduce noise
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+def check_chain_info():
+    try:
+        # Get a healthy node
+        node = node_pulse.get_node()
+        print(f"\nUsing node: {node}")
 
-def on_node_update(nodes):
-    print(f"\nNodes updated: {[node['url'] for node in nodes]}")
-
-def on_error(error):
-    print(f"\nError occurred: {str(error)}")
-
-def on_fallback(fallback_type, nodes):
-    print(f"\nFalling back to {fallback_type} nodes: {nodes}")
+        # Get chain info
+        response = requests.get(f"{node}/v1/chain/get_info")
+        chain_info = response.json()
+        print(f"Chain info: {json.dumps(chain_info, indent=2)}")
+        
+    except Exception as error:
+        print(f"Failed to get chain info: {str(error)}")
 
 # Initialize NodePulse with default options
 node_pulse = NodePulse(
     node_type='hyperion',
     network='mainnet',
     node_count=3,
-    update_interval=10000,  # Set to 10 seconds for testing
-    log_level='info',
-    on_node_update=on_node_update,
-    on_error=on_error,
-    on_fallback=on_fallback
+    update_interval=10000  # Set to 10 seconds for testing
 )
 
-# Get a node
-node = node_pulse.get_node()
-print(f"\nUsing node: {node}")
+# Initial check
+check_chain_info()
 
-# Keep the program running to see background updates
+# Keep checking every 10 seconds
 try:
-    print("\nWaiting for updates (press Ctrl+C to exit)...")
+    print("\nChecking chain info every 10 seconds (press Ctrl+C to exit)...")
     while True:
-        time.sleep(1)
+        time.sleep(10)
+        check_chain_info()
 except KeyboardInterrupt:
     print("\nExiting...") 

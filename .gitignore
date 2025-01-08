@@ -9,3 +9,9 @@ build/
 __pycache__/
 *.pyc
 
+# Environment
+.env
+.venv
+venv/
+ENV/
+

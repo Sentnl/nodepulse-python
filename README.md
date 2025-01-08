@@ -1,7 +1,7 @@
 <div align="center">
 
 # NodePulse Python
-[![PyPI Package](https://img.shields.io/pypi/v/nodepulse)](https://pypi.org/project/nodepulse/)
+[![PyPI Package](https://img.shields.io/pypi/v/nodepulse)](git branch -M main/)
 
 **Maintain and utilize a list of healthy nodes.**
 
@@ -20,6 +20,11 @@ For now only the WAX network is supported.
 - **Fault Tolerance**: Maintains network integrity even if some nodes fail
 - **Custom Default Nodes**: Allows overriding of default nodes for specific node types and networks
 - **Network Supported**: WAX
+- **Node Types Supported**: 
+  - Hyperion
+  - Atomic
+  - LightAPI
+  - IPFS
 
 ## Get Started
 
@@ -48,7 +53,7 @@ print(f"Using node: {node}")
 
 You can customize the behavior of NodePulse by passing options when creating an instance. Available options include:
 
-- `node_type`: Type of nodes to use ('hyperion' or 'atomic'). Default is 'hyperion'
+- `node_type`: Type of nodes to use ('hyperion', 'atomic', 'lightapi', or 'ipfs'). Default is 'hyperion'
 - `network`: Network to use ('mainnet' or 'testnet'). Default is 'mainnet'
 - `node_count`: Number of nodes to retrieve from the API. Default is 3
 - `update_interval`: How often (in milliseconds) to refresh the node list. Default is 30000
