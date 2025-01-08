@@ -49,7 +49,7 @@ node = node_pulse.get_node()
 print(f"Using node: {node}")
 ```
 
-### Custom Options
+### Custom Options.
 
 You can customize the behavior of NodePulse by passing options when creating an instance. Available options include:
 
