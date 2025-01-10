@@ -191,11 +191,21 @@ class NodePulse:
             'nodeType': self.node_type,
             'network': self.network,
             'nodeCount': self.node_count,
-            'historyfull': self.history_full,
-            'streamingEnabled': self.streaming_enabled,
-            'atomicassets': self.atomic_assets,
-            'atomicmarket': self.atomic_market
         }
+        
+        # Only add Hyperion-specific params if using Hyperion
+        if self.node_type == NodeType.HYPERION:
+            params.update({
+                'historyfull': self.history_full,
+                'streamingEnabled': self.streaming_enabled,
+            })
+        
+        # Only add Atomic-specific params if using Atomic
+        elif self.node_type == NodeType.ATOMIC:
+            params.update({
+                'atomicassets': self.atomic_assets,
+                'atomicmarket': self.atomic_market,
+            })
         
         self.logger.debug(f"Fetching nodes with params: {params}")
         try:
